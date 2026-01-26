@@ -112,3 +112,38 @@ export const SOFT_PILLARS = [
     descEn: "Visual polish, micro-interactions, consistency.",
   },
 ] as const;
+export const CAPABILITIES = [
+  {
+    key: "product-uiux",
+    title: { es: "Producto + UI/UX", en: "Product + UI/UX" },
+    desc: {
+      es: "Jerarquía visual, micro-interacciones y sistemas consistentes. Menos ruido, más intención.",
+      en: "Visual hierarchy, micro-interactions, and consistent systems. Less noise, more intent.",
+    },
+  },
+  {
+    key: "frontend",
+    title: { es: "Frontend", en: "Frontend" },
+    desc: {
+      es: "Next.js (App Router) + TypeScript + Tailwind. Componentes pulidos, responsive real y performance.",
+      en: "Next.js (App Router) + TypeScript + Tailwind. Polished components, true responsive, and performance.",
+    },
+  },
+  {
+    key: "backend-api",
+    title: { es: "Backend + API", en: "Backend + API" },
+    desc: {
+      es: "APIs limpias con Spring Boot: DTOs, validación, auth JWT y contratos claros para integrar sin fricción.",
+      en: "Clean Spring Boot APIs: DTOs, validation, JWT auth, and clear contracts for frictionless integration.",
+    },
+  },
+  {
+    key: "deploy-dx",
+    title: { es: "Deploy + DX", en: "Deploy + DX" },
+    desc: {
+      es: "Deploy con Vercel/Railway, variables de entorno, logs y cuidado por la experiencia end-to-end.",
+      en: "Deploy with Vercel/Railway, env vars, logs, and end-to-end experience mindset.",
+    },
+  },
+] as const;
+
