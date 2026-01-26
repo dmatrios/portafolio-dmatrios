@@ -1,0 +1,24 @@
+.scroll-float {
+  overflow: clip;
+}
+.scroll-float-text {
+  display: inline-block;
+  font-size: clamp(1.6rem, 8vw, 10rem);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.char {
+  display: inline-block;
+}
+.scroll-float {
+  overflow: hidden;
+  overflow: clip;
+  scrollbar-width: none;
+}
+
+.scroll-float::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
