@@ -75,22 +75,85 @@ export type Project = {
 
 //Data de los proyectos
 export const PROJECTS: Project[] = [
-  {
-    key: "groomer",
-    slug: "groomerapp",
-    title: "Groomer App",
-    description: {
-      es: "Gestión de citas, clientes y mascotas con flujo de atención. Demo desplegada.",
-      en: "Appointments, clients and pets management with service workflow. Deployed demo.",
-    },
-    status: "deployed",
-    tech: ["next", "ts", "spring", "mysql", "docker", "vercel", "railway"],
-    coverSrc: "/projects/GroomerApp/cover.jpg",
-    galleryDir: "/projects/GroomerApp",
-    tags: ["Next.js", "Spring Boot", "Deploy"],
-    accent: "cyan",
-    featured: true,
+ {
+  key: "groomer",
+  slug: "groomerapp",
+  title: "Groomer App",
+  description: {
+    es: "Sistema web interno para peluquería canina. Reemplaza Excel con gestión de clientes, mascotas, agenda, atenciones reales, pagos y reportes. Diseñado para uso diario por usuarios no técnicos. Demo desplegada.",
+    en: "Internal web system for a dog grooming business. Replaces Excel with clients, pets, scheduling, real visits, payments and reports. Designed for daily use by non-technical users. Deployed demo.",
   },
+  status: "deployed",
+  tech: [
+    "next",
+    "ts",
+    "spring",
+    "mysql",
+    "docker",
+    "jwt",
+    "vercel",
+    "railway",
+    "github",
+  ],
+  coverSrc: "/projects/GroomerApp/cover.jpg",
+  galleryDir: "/projects/GroomerApp",
+  tags: ["Sistema real", "Full-Stack", "Spring Boot", "Next.js"],
+  accent: "cyan",
+  featured: true,
+
+  links: {
+    live: "https://groomer-front.vercel.app/",
+    repo: {
+      backend: "https://github.com/dmatrios/groomer-api",
+      frontend: "https://github.com/dmatrios/groomer-front",
+    },
+    // postman: "https://documenter.getpostman.com/view/XXXX/groomer-api-v5"
+  },
+
+  meta: {
+    year: "2026",
+    duration: {
+      es: "1 mes (MVP completo)",
+      en: "1 month (complete MVP)",
+    },
+    role: {
+      es: "Full-Stack",
+      en: "Full-Stack",
+    },
+    architecture: {
+      es: "Backend Java 21 + Spring Boot con arquitectura Package by Feature, DTOs, validación, JWT, roles y auditoría. Frontend Next.js App Router con arquitectura por feature, HTTP client centralizado y guards por rol.",
+      en: "Java 21 + Spring Boot backend using Package-by-Feature architecture, DTOs, validation, JWT, roles and auditing. Next.js App Router frontend with feature-based architecture, centralized HTTP client and role-based guards.",
+    },
+  },
+
+  highlights: {
+    es: [
+      "Reemplazo total de Excel por un sistema web centralizado.",
+      "Gestión completa de clientes y mascotas (1 cliente → N mascotas).",
+      "Agenda con detección de cruces de horario y confirmación manual.",
+      "Registro de atenciones reales con múltiples servicios y pagos.",
+      "Historial completo por mascota con filtros y agrupación por día.",
+      "Control de pagos: pendiente, parcial y pagado.",
+      "Búsqueda global por cliente, mascota, teléfono, zona o código.",
+      "Autenticación JWT con roles (ADMIN / USER) y auditoría de acciones.",
+      "Deploy real: backend en Railway, frontend en Vercel.",
+    ],
+    en: [
+      "Full replacement of Excel with a centralized web system.",
+      "Complete clients and pets management (1 client → N pets).",
+      "Scheduling with overlap detection and manual confirmation.",
+      "Real visit records with multiple services and payments.",
+      "Full pet history with filters and day grouping.",
+      "Payment control: pending, partial and paid.",
+      "Global search by client, pet, phone, zone or code.",
+      "JWT authentication with roles (ADMIN / USER) and action auditing.",
+      "Real deployment: backend on Railway, frontend on Vercel.",
+    ],
+  },
+
+
+},
+  
   {
     key: "ahorrape",
     slug: "ahorrape",

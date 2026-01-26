@@ -105,7 +105,7 @@ export function AboutStory({ lang }: { lang: "es" | "en" }) {
     "inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(var(--border),0.75)] bg-[rgba(var(--background),0.12)] backdrop-blur-xl";
 
   return (
-    <section ref={trackRef} className="relative h-[420vh]">
+    <section ref={trackRef} className="relative h-[220vh] md:h-[420vh]">
       {/* DESKTOP: escena fija */}
       <motion.div
         className="fixed inset-0 z-0 hidden md:flex items-center justify-center"
@@ -269,7 +269,7 @@ export function AboutStory({ lang }: { lang: "es" | "en" }) {
       </motion.div>
 
       {/* MOBILE: cards (sí, está bien que sea diferente) */}
-      <div className="md:hidden px-6 pt-20 pb-24">
+      <div className="md:hidden px-6 pt-40 pb-10">
         <div className="mx-auto max-w-[720px]">
           <p className="text-[11px] tracking-[0.34em] uppercase text-[rgba(var(--muted-foreground),0.95)]">
             {copy.kicker}

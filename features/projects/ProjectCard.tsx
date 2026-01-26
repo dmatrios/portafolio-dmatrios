@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { Lang, Project, ProjectPreview, ProjectStatus } from "@/shared/data/projects";
 import { TECH_ICON } from "@/shared/ui/tech-icons";
 
@@ -19,17 +20,29 @@ function isFullProject(p: CardProject): p is Project {
 export function ProjectCard({
   project,
   lang,
-  ctaAs = "span", // "span" si lo envuelves con <Link>, "none" si no quieres CTA
+  ctaAs = "auto", // ✅ "auto" => si hay slug, Link; si no, span
 }: {
   project: CardProject;
   lang: Lang;
-  ctaAs?: "span" | "none";
+  ctaAs?: "auto" | "link" | "span" | "none";
 }) {
   const L = lang;
 
   const description = isFullProject(project) ? project.description[L] : project.description;
   const coverSrc = isFullProject(project) ? project.coverSrc : undefined;
   const slug = isFullProject(project) ? project.slug : undefined;
+
+  // ✅ ruta detalle
+  const detailHref = slug ? `/${L}/projects/${slug}` : null;
+
+  const ctaLabel =
+    L === "es" ? (slug ? "Ver detalle" : "Ver") : slug ? "View details" : "View";
+
+  const shouldLink =
+    ctaAs !== "none" && !!detailHref && (ctaAs === "auto" || ctaAs === "link");
+
+  const shouldSpan =
+    ctaAs !== "none" && (!detailHref || ctaAs === "span");
 
   return (
     <div
@@ -99,22 +112,40 @@ export function ProjectCard({
           })}
         </div>
 
-        {ctaAs === "span" ? (
+        {ctaAs === "none" ? null : (
           <div className="pt-2">
-            <span
-              className="
-                inline-flex items-center justify-center
-                rounded-full px-6 py-3 text-sm md:text-base font-medium
-                bg-background/55 backdrop-blur-md
-                border border-border/50
-                shadow-sm transition
-                group-hover:shadow-md group-hover:-translate-y-0.5
-              "
-            >
-              {L === "es" ? (slug ? "Ver detalle" : "Ver") : (slug ? "View details" : "View")}
-            </span>
+            {shouldLink ? (
+              <Link
+                href={detailHref!}
+                className="
+                  inline-flex items-center justify-center
+                  rounded-full px-6 py-3 text-sm md:text-base font-medium
+                  bg-background/55 backdrop-blur-md
+                  border border-border/50
+                  shadow-sm transition
+                  hover:shadow-md hover:-translate-y-0.5
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20
+                "
+                aria-label={ctaLabel}
+              >
+                {ctaLabel}
+              </Link>
+            ) : shouldSpan ? (
+              <span
+                className="
+                  inline-flex items-center justify-center
+                  rounded-full px-6 py-3 text-sm md:text-base font-medium
+                  bg-background/55 backdrop-blur-md
+                  border border-border/50
+                  shadow-sm transition
+                  group-hover:shadow-md group-hover:-translate-y-0.5
+                "
+              >
+                {ctaLabel}
+              </span>
+            ) : null}
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

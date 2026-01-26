@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Github, Linkedin, Mail, Home } from "lucide-react";
 import { useMemo } from "react";
+
 export type MenuItem = { label: string; href: string };
 export type SocialIconKey = "github" | "linkedin" | "mail";
 export type SocialItem = { label: string; href: string; icon: SocialIconKey };
@@ -22,19 +23,91 @@ const iconMap: Record<SocialIconKey, React.ReactNode> = {
   mail: <Mail className="h-4 w-4" />,
 };
 
-export function StaggeredMenu({ open, onClose, items, socials = [], lang = "es" }: Props) {
+function normalizeHref(href: string, lang: "es" | "en") {
+  const home = `/${lang}`;
+
+  // si viene vacío o raro
+  if (!href) return home;
+
+  // externo / mailto / tel => no tocar
+  if (
+    href.startsWith("http://") ||
+    href.startsWith("https://") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  ) {
+    return href;
+  }
+
+  // home explícito
+  if (href === "/" || href === home) return home;
+
+  // hash-only (#about)
+  if (href.startsWith("#")) {
+    const anchor = href.slice(1);
+
+    // ✅ excepción: skills se queda ancla
+    if (anchor === "skills") return `${home}#skills`;
+
+    // el resto: lo mandamos a page
+    // (#about -> /es/about, #projects -> /es/projects, #contact -> /es/contact)
+    return `${home}/${anchor}`;
+  }
+
+  // /#about (a veces llega así)
+  if (href.startsWith("/#")) {
+    const anchor = href.slice(2);
+
+    if (anchor === "skills") return `${home}#skills`;
+    return `${home}/${anchor}`;
+  }
+
+  // /es#about
+  if (href.startsWith(home + "#")) {
+    const anchor = href.slice((home + "#").length);
+
+    if (anchor === "skills") return `${home}#skills`;
+    return `${home}/${anchor}`;
+  }
+
+  // ya viene como /es/lo-que-sea o /en/lo-que-sea => dejar
+  if (href.startsWith("/")) return href;
+
+  // fallback: si viene "about" sin slash
+  if (href.includes("#")) {
+    const [path, hash] = href.split("#");
+    if (hash === "skills") return `${home}#skills`;
+    return `${home}/${hash}`;
+  }
+
+  return `${home}/${href}`;
+}
+
+export function StaggeredMenu({
+  open,
+  onClose,
+  items,
+  socials = [],
+  lang = "es",
+}: Props) {
   const homeHref = `/${lang}`;
   const homeLabel = lang === "es" ? "Inicio" : "Home";
 
   const finalItems: MenuItem[] = useMemo(() => {
-    // Evita duplicar si ya lo mandas desde afuera
-    const alreadyHasHome = items.some(
-      (it) => it.href === homeHref || it.href === "/" || it.label.toLowerCase() === "home" || it.label.toLowerCase() === "inicio"
-    );
+    const alreadyHasHome = items.some((it) => {
+      const l = it.label.toLowerCase();
+      return it.href === homeHref || it.href === "/" || l === "home" || l === "inicio";
+    });
 
-    const base = alreadyHasHome ? items : [{ label: homeLabel, href: homeHref }, ...items];
-    return base;
-  }, [items, homeHref, homeLabel]);
+    const base = alreadyHasHome
+      ? items
+      : [{ label: homeLabel, href: homeHref }, ...items];
+
+    return base.map((it) => ({
+      ...it,
+      href: normalizeHref(it.href, lang),
+    }));
+  }, [items, homeHref, homeLabel, lang]);
 
   return (
     <AnimatePresence>
@@ -78,11 +151,11 @@ export function StaggeredMenu({ open, onClose, items, socials = [], lang = "es" 
                 className="space-y-2"
               >
                 {finalItems.map((it) => {
-                  const isHome = it.href === homeHref || it.href === "/" || it.label === homeLabel;
+                  const isHome = it.href === homeHref;
 
                   return (
                     <motion.li
-                      key={it.href}
+                      key={it.href + it.label}
                       variants={{
                         hidden: { opacity: 0, y: 10 },
                         show: { opacity: 1, y: 0 },

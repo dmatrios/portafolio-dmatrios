@@ -63,7 +63,7 @@ export function ProjectsPreview({ lang }: { lang: "es" | "en" }) {
                           }}
                           className="shrink-0 w-[min(560px,85vw)]"
                         >
-                          <ProjectCard project={p} lang={lang} />
+                         <ProjectCard project={p} lang={lang} ctaAs="none" />
                         </motion.div>
                       );
                     })}
