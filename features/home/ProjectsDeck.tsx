@@ -8,10 +8,11 @@ import { gsap } from "gsap";
 import type { Lang, Project } from "@/shared/data/projects";
 import { PROJECTS } from "@/shared/data/projects";
 import { ProjectCard } from "@/features/projects/ProjectCard";
+import { MotionValue } from "motion/react";
 
 export function ProjectsDeck({ lang }: { lang: Lang }) {
   const sectionRef = useRef<HTMLElement | null>(null);
-
+  scrollYProgress: MotionValue<number>;
   // ✅ Cambio clave:
   // - dejamos de usar CORE_PREVIEW (no tiene coverSrc)
   // - usamos PROJECTS (sí tiene coverSrc)
@@ -363,8 +364,8 @@ function DeckCard({
     stage === "top"
       ? [0.08, 0.42]
       : stage === "middle"
-      ? [0.42, 0.78]
-      : null;
+        ? [0.42, 0.78]
+        : null;
 
   const x = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 140]);
 
@@ -387,10 +388,10 @@ function DeckCard({
     stage === "final"
       ? 1
       : useTransform(
-          scrollYProgress,
-          [range![0], range![1] - 0.02, range![1]],
-          [1, 1, 0]
-        );
+        scrollYProgress,
+        [range![0], range![1] - 0.02, range![1]],
+        [1, 1, 0]
+      );
 
   return (
     <motion.div
@@ -402,7 +403,7 @@ function DeckCard({
         scale,
         rotateZ,
         rotateY,
-        translateZ: z,
+        z,
         transformStyle: "preserve-3d",
       }}
     >
