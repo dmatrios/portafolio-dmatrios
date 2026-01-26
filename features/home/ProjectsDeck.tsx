@@ -2,27 +2,21 @@
 
 import React, { useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { gsap } from "gsap";
 
 import type { Lang, Project } from "@/shared/data/projects";
 import { PROJECTS } from "@/shared/data/projects";
 import { ProjectCard } from "@/features/projects/ProjectCard";
-import { MotionValue } from "motion/react";
 
 export function ProjectsDeck({ lang }: { lang: Lang }) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  scrollYProgress: MotionValue<number>;
-  // ✅ Cambio clave:
-  // - dejamos de usar CORE_PREVIEW (no tiene coverSrc)
-  // - usamos PROJECTS (sí tiene coverSrc)
-  // - y reemplazamos "notes" por "soelec"
+
   const projects = useMemo<Project[]>(() => {
     const pick = ["groomer", "ahorrape", "soelec"];
     return PROJECTS.filter((p) => pick.includes(p.key));
   }, []);
 
-  // OJO: scrollYProgress solo se usa en DESKTOP (md+)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -267,7 +261,9 @@ function MobileCardSlider({
 
         const glow = eased;
 
-        setters[i].t(`translate3d(0,0,0) rotate(${rotate}deg) scale(${scale})`);
+        setters[i].t(
+          `translate3d(0,0,0) rotate(${rotate}deg) scale(${scale})`
+        );
         setters[i].o(opacity);
         setters[i].g(glow);
       });
@@ -354,7 +350,7 @@ function DeckCard({
 }: {
   project: Project;
   lang: Lang;
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
   stage: "top" | "middle" | "final";
 }) {
   const baseY = stage === "top" ? 0 : stage === "middle" ? 14 : 28;
@@ -364,34 +360,38 @@ function DeckCard({
     stage === "top"
       ? [0.08, 0.42]
       : stage === "middle"
-        ? [0.42, 0.78]
-        : null;
+      ? [0.42, 0.78]
+      : null;
 
-  const x = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 140]);
+  const x =
+    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 140]);
 
   const y =
     stage === "final"
       ? baseY
       : useTransform(scrollYProgress, range!, [baseY, baseY + 80]);
 
-  const z = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, -220]);
+  const z =
+    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, -220]);
 
   const scale =
     stage === "final"
       ? baseScale
       : useTransform(scrollYProgress, range!, [baseScale, baseScale - 0.08]);
 
-  const rotateZ = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 10]);
-  const rotateY = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 14]);
+  const rotateZ =
+    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 10]);
+  const rotateY =
+    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 14]);
 
   const opacity =
     stage === "final"
       ? 1
       : useTransform(
-        scrollYProgress,
-        [range![0], range![1] - 0.02, range![1]],
-        [1, 1, 0]
-      );
+          scrollYProgress,
+          [range![0], range![1] - 0.02, range![1]],
+          [1, 1, 0]
+        );
 
   return (
     <motion.div
@@ -403,7 +403,7 @@ function DeckCard({
         scale,
         rotateZ,
         rotateY,
-        z,
+        translateZ: z, // ✅ FIX: NO usar "z" (atributo inválido). Usar translateZ.
         transformStyle: "preserve-3d",
       }}
     >
