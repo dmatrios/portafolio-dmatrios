@@ -9,7 +9,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import gsap from "gsap";
+import { gsap } from "gsap";
 import "./CardSwap.css";
 
 export type CardSwapEasing = "elastic" | "smooth";
@@ -87,21 +87,21 @@ export default function CardSwap({
   const config =
     easing === "elastic"
       ? {
-          ease: "elastic.out(0.6,0.9)",
-          durDrop: 2,
-          durMove: 2,
-          durReturn: 2,
-          promoteOverlap: 0.9,
-          returnDelay: 0.05,
-        }
+        ease: "elastic.out(0.6,0.9)",
+        durDrop: 2,
+        durMove: 2,
+        durReturn: 2,
+        promoteOverlap: 0.9,
+        returnDelay: 0.05,
+      }
       : {
-          ease: "power1.inOut",
-          durDrop: 0.85,
-          durMove: 0.85,
-          durReturn: 0.85,
-          promoteOverlap: 0.45,
-          returnDelay: 0.18,
-        };
+        ease: "power1.inOut",
+        durDrop: 0.85,
+        durMove: 0.85,
+        durReturn: 0.85,
+        promoteOverlap: 0.45,
+        returnDelay: 0.18,
+      };
 
   // ✅ Tipado: aquí childArr YA es CardElement[]
   const childArr = useMemo(() => {
