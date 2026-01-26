@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { Github, Linkedin, Mail } from "lucide-react";
-
+import { Github, Linkedin, Mail, Home } from "lucide-react";
+import { useMemo } from "react";
 export type MenuItem = { label: string; href: string };
 export type SocialIconKey = "github" | "linkedin" | "mail";
 export type SocialItem = { label: string; href: string; icon: SocialIconKey };
@@ -13,6 +13,7 @@ type Props = {
   onClose: () => void;
   items: MenuItem[];
   socials?: SocialItem[];
+  lang?: "es" | "en";
 };
 
 const iconMap: Record<SocialIconKey, React.ReactNode> = {
@@ -21,7 +22,20 @@ const iconMap: Record<SocialIconKey, React.ReactNode> = {
   mail: <Mail className="h-4 w-4" />,
 };
 
-export function StaggeredMenu({ open, onClose, items, socials = [] }: Props) {
+export function StaggeredMenu({ open, onClose, items, socials = [], lang = "es" }: Props) {
+  const homeHref = `/${lang}`;
+  const homeLabel = lang === "es" ? "Inicio" : "Home";
+
+  const finalItems: MenuItem[] = useMemo(() => {
+    // Evita duplicar si ya lo mandas desde afuera
+    const alreadyHasHome = items.some(
+      (it) => it.href === homeHref || it.href === "/" || it.label.toLowerCase() === "home" || it.label.toLowerCase() === "inicio"
+    );
+
+    const base = alreadyHasHome ? items : [{ label: homeLabel, href: homeHref }, ...items];
+    return base;
+  }, [items, homeHref, homeLabel]);
+
   return (
     <AnimatePresence>
       {open && (
@@ -63,24 +77,34 @@ export function StaggeredMenu({ open, onClose, items, socials = [] }: Props) {
                 }}
                 className="space-y-2"
               >
-                {items.map((it) => (
-                  <motion.li
-                    key={it.href}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      show: { opacity: 1, y: 0 },
-                    }}
-                  >
-                    <Link
-                      href={it.href}
-                      onClick={onClose}
-                      className="flex items-center justify-between rounded-xl px-4 py-4 text-base text-white/90 bg-white/6 hover:bg-white/10 border border-white/10 transition"
+                {finalItems.map((it) => {
+                  const isHome = it.href === homeHref || it.href === "/" || it.label === homeLabel;
+
+                  return (
+                    <motion.li
+                      key={it.href}
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        show: { opacity: 1, y: 0 },
+                      }}
                     >
-                      <span>{it.label}</span>
-                      <span className="text-white/55">↗</span>
-                    </Link>
-                  </motion.li>
-                ))}
+                      <Link
+                        href={it.href}
+                        onClick={onClose}
+                        className={[
+                          "flex items-center justify-between rounded-xl px-4 py-4 text-base text-white/90",
+                          "bg-white/6 hover:bg-white/10 border border-white/10 transition",
+                        ].join(" ")}
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          {isHome ? <Home className="h-4 w-4 text-white/75" /> : null}
+                          <span>{it.label}</span>
+                        </span>
+                        <span className="text-white/55">↗</span>
+                      </Link>
+                    </motion.li>
+                  );
+                })}
               </motion.ul>
 
               {socials.length > 0 && (

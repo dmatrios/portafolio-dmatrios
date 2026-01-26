@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { gsap } from "gsap";
 
 import type { Lang, Project } from "@/shared/data/projects";
 import { PROJECTS } from "@/shared/data/projects";
@@ -80,9 +79,7 @@ export function ProjectsDeck({ lang }: { lang: Lang }) {
                     </p>
 
                     <h2 className="mt-3 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05]">
-                      {lang === "es"
-                        ? "Una baraja de highlights"
-                        : "A deck of highlights"}
+                      {lang === "es" ? "Una baraja de highlights" : "A deck of highlights"}
                     </h2>
 
                     <p className="mt-4 text-sm md:text-base opacity-80 max-w-[52ch]">
@@ -111,24 +108,9 @@ export function ProjectsDeck({ lang }: { lang: Lang }) {
                   <div className="relative">
                     <div className="[perspective:1400px] relative h-[72svh] flex justify-end pt-10">
                       <div className="relative w-full max-w-[860px] h-full">
-                        <DeckCard
-                          project={projects[2]}
-                          lang={lang}
-                          scrollYProgress={scrollYProgress}
-                          stage="final"
-                        />
-                        <DeckCard
-                          project={projects[1]}
-                          lang={lang}
-                          scrollYProgress={scrollYProgress}
-                          stage="middle"
-                        />
-                        <DeckCard
-                          project={projects[0]}
-                          lang={lang}
-                          scrollYProgress={scrollYProgress}
-                          stage="top"
-                        />
+                        <DeckCard project={projects[2]} lang={lang} scrollYProgress={scrollYProgress} stage="final" />
+                        <DeckCard project={projects[1]} lang={lang} scrollYProgress={scrollYProgress} stage="middle" />
+                        <DeckCard project={projects[0]} lang={lang} scrollYProgress={scrollYProgress} stage="top" />
                       </div>
                     </div>
                   </div>
@@ -144,37 +126,33 @@ export function ProjectsDeck({ lang }: { lang: Lang }) {
 }
 
 /* =========================
-   MOBILE: swipe + GSAP entrance
+   MOBILE: swipe + entrance
 ========================= */
 
-function ProjectsMobileSlider({
-  lang,
-  projects,
-}: {
-  lang: Lang;
-  projects: Project[];
-}) {
+function ProjectsMobileSlider({ lang, projects }: { lang: Lang; projects: Project[] }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const nodes = wrap.querySelectorAll("[data-m-anim]");
-    gsap.set(nodes, { opacity: 0, y: 18, x: 10, rotateZ: -1.25 });
+    const nodes = Array.from(wrap.querySelectorAll<HTMLElement>("[data-m-anim]"));
+
+    // estado inicial
+    nodes.forEach((n) => {
+      n.style.opacity = "0";
+      n.style.transform = "translate3d(10px,18px,0) rotate(-1.25deg)";
+      n.style.willChange = "transform, opacity";
+    });
 
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries[0]?.isIntersecting) return;
 
-        gsap.to(nodes, {
-          opacity: 1,
-          y: 0,
-          x: 0,
-          rotateZ: 0,
-          duration: 0.55,
-          ease: "power3.out",
-          stagger: 0.08,
+        nodes.forEach((n, i) => {
+          n.style.transition = `transform 550ms cubic-bezier(.16,1,.3,1) ${i * 80}ms, opacity 550ms cubic-bezier(.16,1,.3,1) ${i * 80}ms`;
+          n.style.opacity = "1";
+          n.style.transform = "translate3d(0,0,0) rotate(0deg)";
         });
 
         io.disconnect();
@@ -198,9 +176,7 @@ function ProjectsMobileSlider({
             shadow-sm
           "
         >
-          <span className="opacity-80">
-            {lang === "es" ? "Desliza para ver más" : "Swipe to see more"}
-          </span>
+          <span className="opacity-80">{lang === "es" ? "Desliza para ver más" : "Swipe to see more"}</span>
           <span className="opacity-70">→</span>
         </div>
       </div>
@@ -212,13 +188,7 @@ function ProjectsMobileSlider({
   );
 }
 
-function MobileCardSlider({
-  projects,
-  lang,
-}: {
-  projects: Project[];
-  lang: Lang;
-}) {
+function MobileCardSlider({ projects, lang }: { projects: Project[]; lang: Lang }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const rafRef = useRef<number | null>(null);
@@ -229,27 +199,15 @@ function MobileCardSlider({
 
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
 
-    const setters = cards.map((card) => {
-      return {
-        t: gsap.quickSetter(card, "transform"),
-        o: gsap.quickTo(card, "opacity", { duration: 0.35, ease: "power3.out" }),
-        g: gsap.quickTo(card, "--glow", { duration: 0.35, ease: "power3.out" }),
-      };
-    });
-
     const update = () => {
       const scrollerRect = scroller.getBoundingClientRect();
       const centerX = scrollerRect.left + scrollerRect.width / 2;
 
-      cards.forEach((card, i) => {
+      cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.left + rect.width / 2;
 
-        const dist = Math.min(
-          1,
-          Math.abs(cardCenter - centerX) / (scrollerRect.width * 0.5)
-        );
-
+        const dist = Math.min(1, Math.abs(cardCenter - centerX) / (scrollerRect.width * 0.5));
         const t = 1 - dist;
         const eased = t * t;
 
@@ -258,14 +216,11 @@ function MobileCardSlider({
 
         const scale = 0.95 + eased * 0.05;
         const opacity = 0.72 + eased * 0.28;
-
         const glow = eased;
 
-        setters[i].t(
-          `translate3d(0,0,0) rotate(${rotate}deg) scale(${scale})`
-        );
-        setters[i].o(opacity);
-        setters[i].g(glow);
+        card.style.transform = `translate3d(0,0,0) rotate(${rotate}deg) scale(${scale})`;
+        card.style.opacity = String(opacity);
+        card.style.setProperty("--glow", String(glow));
       });
     };
 
@@ -312,6 +267,7 @@ function MobileCardSlider({
             style={
               {
                 ["--glow" as any]: 0,
+                willChange: "transform, opacity",
               } as React.CSSProperties
             }
           >
@@ -329,7 +285,6 @@ function MobileCardSlider({
                   "radial-gradient(900px circle at 30% 20%, rgba(255,255,255,.10), transparent 60%), radial-gradient(900px circle at 70% 40%, rgba(255,255,255,.08), transparent 60%), radial-gradient(900px circle at 50% 85%, rgba(255,255,255,.06), transparent 65%)",
               }}
             />
-
             <ProjectCard project={p} lang={lang} />
           </div>
         ))}
@@ -356,42 +311,20 @@ function DeckCard({
   const baseY = stage === "top" ? 0 : stage === "middle" ? 14 : 28;
   const baseScale = stage === "top" ? 1 : stage === "middle" ? 0.975 : 0.95;
 
-  const range =
-    stage === "top"
-      ? [0.08, 0.42]
-      : stage === "middle"
-      ? [0.42, 0.78]
-      : null;
+  const range = stage === "top" ? [0.08, 0.42] : stage === "middle" ? [0.42, 0.78] : null;
 
-  const x =
-    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 140]);
+  const x = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 140]);
+  const y = stage === "final" ? baseY : useTransform(scrollYProgress, range!, [baseY, baseY + 80]);
+  const z = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, -220]);
 
-  const y =
-    stage === "final"
-      ? baseY
-      : useTransform(scrollYProgress, range!, [baseY, baseY + 80]);
-
-  const z =
-    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, -220]);
-
-  const scale =
-    stage === "final"
-      ? baseScale
-      : useTransform(scrollYProgress, range!, [baseScale, baseScale - 0.08]);
-
-  const rotateZ =
-    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 10]);
-  const rotateY =
-    stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 14]);
+  const scale = stage === "final" ? baseScale : useTransform(scrollYProgress, range!, [baseScale, baseScale - 0.08]);
+  const rotateZ = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 10]);
+  const rotateY = stage === "final" ? 0 : useTransform(scrollYProgress, range!, [0, 14]);
 
   const opacity =
     stage === "final"
       ? 1
-      : useTransform(
-          scrollYProgress,
-          [range![0], range![1] - 0.02, range![1]],
-          [1, 1, 0]
-        );
+      : useTransform(scrollYProgress, [range![0], range![1] - 0.02, range![1]], [1, 1, 0]);
 
   return (
     <motion.div
@@ -403,7 +336,7 @@ function DeckCard({
         scale,
         rotateZ,
         rotateY,
-        translateZ: z, // ✅ FIX: NO usar "z" (atributo inválido). Usar translateZ.
+        translateZ: z,
         transformStyle: "preserve-3d",
       }}
     >
