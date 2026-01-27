@@ -28,8 +28,8 @@ export default function Header({ lang }: { lang: "es" | "en" }) {
 
   const socials: SocialItem[] = useMemo(
     () => [
-      { label: "GitHub", href: "https://github.com/", icon: "github" },
-      { label: "LinkedIn", href: "https://www.linkedin.com/", icon: "linkedin" },
+      { label: "GitHub", href: "https://github.com/dmatrios", icon: "github" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/daniel-maturrano/", icon: "linkedin" },
       { label: "Email", href: "mailto:ddmatrios@gmail.com", icon: "mail" },
     ],
     []

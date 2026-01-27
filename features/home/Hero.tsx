@@ -33,7 +33,7 @@ export function Hero({ lang }: { lang: "es" | "en" }) {
 
               <div className="flex flex-wrap items-center gap-3 pt-3">
                 <Link
-                  href="#projects"
+                  href={`/${lang}/projects`}
                   className="
                     rounded-full px-6 py-3 text-sm md:text-base font-medium
                     bg-background/55 backdrop-blur-md
@@ -46,7 +46,7 @@ export function Hero({ lang }: { lang: "es" | "en" }) {
                 </Link>
 
                 <Link
-                  href="#contact"
+                  href={`/${lang}/contact`}
                   className="
                     rounded-full px-6 py-3 text-sm md:text-base font-medium
                     bg-background/30 backdrop-blur-md

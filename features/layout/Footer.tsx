@@ -71,8 +71,8 @@ export function Footer({ lang }: { lang: "es" | "en" }) {
   )}`;
 
   // ✅ Pon tus links reales cuando los tengas
-  const GITHUB = "https://github.com/";
-  const LINKEDIN = "https://www.linkedin.com/";
+  const GITHUB = "https://github.com/dmatrios";
+  const LINKEDIN = "https://www.linkedin.com/in/daniel-maturrano/";
 
   return (
     <footer aria-label="Footer" className="relative overflow-hidden">
