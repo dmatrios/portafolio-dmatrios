@@ -3,8 +3,8 @@
 import TextType from "@/components/TextType";
 
 export function HeroTyped({ lang }: { lang: "es" | "en" }) {
-  const textsEs = ["Desarrollador", "Full-Stack", "Dmatrios", "Humano", "Esposo de dayanne"];
-  const textsEn = ["Developer", "Full-Stack", "Dmatrios", "Human", "Husband of dayanne"];
+  const textsEs = ["Desarrollador", "Full-Stack", "Dmatrios", "Humano", "Esposo, Programador"];
+  const textsEn = ["Developer", "Full-Stack", "Dmatrios", "Human", "Husband ", "Programmer"];
 
   return (
     <span
