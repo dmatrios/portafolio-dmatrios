@@ -5,6 +5,7 @@ export type ProjectStatus = "deployed" | "paused" | "local";
 export type TechKey =
   | "next"
   | "react"
+  | "vue"
   | "angular"
   | "ts"
   | "spring"
@@ -163,7 +164,7 @@ export const PROJECTS: Project[] = [
       en: "Personal finance: budgets, expenses and control. Strong backend-first approach.",
     },
     status: "local",
-    tech: ["react", "ts", "spring", "mysql", "github"],
+    tech: ["vue", "ts", "spring", "mysql", "github"],
     coverSrc: "/projects/AhorraPE/cover.jpg",
     galleryDir: "/projects/AhorraPE",
     tags: ["Spring Boot", "MySQL", "React"],
