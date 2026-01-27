@@ -282,7 +282,7 @@ export default function ContactPage({ lang }: { lang: Lang }) {
                 </a>
 
                 <a
-                  href="https://linkedin.com/in/dmatrios"
+                  href="https://www.linkedin.com/in/daniel-maturrano"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-[16px] border border-[rgba(var(--border),0.70)] bg-[rgba(var(--background),0.06)] px-4 py-3 transition hover:-translate-y-0.5 hover:shadow-[0_18px_55px_rgba(0,0,0,0.14)]"
