@@ -12,7 +12,7 @@ export function ProjectsDeck({ lang }: { lang: Lang }) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   const projects = useMemo<Project[]>(() => {
-    const pick = ["groomer", "ahorrape", "soelec"];
+    const pick = ["groomer", "github-issues-triage", "soelec"];
     return PROJECTS.filter((p) => pick.includes(p.key));
   }, []);
 

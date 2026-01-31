@@ -112,7 +112,7 @@ export function About({ lang }: { lang: "es" | "en" }) {
                           {copy.p2}
                         </p>
 
-                        <div className="mt-10">
+                        <div className="mt-10 flex items-center gap-3">
                           <Link
                             href={aboutHref}
                             className="
@@ -132,6 +132,21 @@ export function About({ lang }: { lang: "es" | "en" }) {
                           >
                             {copy.cta}
                           </Link>
+
+                          {/* Download CV: place PDF in public/Daniel-Maturrano-CV.pdf */}
+                          <a
+                            href="/Daniel-Maturrano-CV.pdf"
+                            download
+                            aria-label={isEs ? "Descargar CV" : "Download CV"}
+                            className="
+                              inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                              border border-[rgba(var(--border),0.75)] bg-[rgba(var(--background),0.06)]
+                              backdrop-blur-md transition hover:-translate-y-0.5
+                            "
+                          >
+                            <Image src="/file.svg" alt="file" width={16} height={16} />
+                            <span>{isEs ? "Descargar CV" : "Download CV"}</span>
+                          </a>
                         </div>
                       </motion.div>
                     </div>
@@ -228,7 +243,7 @@ export function About({ lang }: { lang: "es" | "en" }) {
               {copy.p2}
             </p>
 
-            <div className="mt-7">
+            <div className="mt-7 flex items-center gap-3">
               <Link
                 href={aboutHref}
                 className="
@@ -248,6 +263,20 @@ export function About({ lang }: { lang: "es" | "en" }) {
               >
                 {copy.cta}
               </Link>
+
+              <a
+                href="/Daniel-Maturrano-CV.pdf"
+                download
+                aria-label={isEs ? "Descargar CV" : "Download CV"}
+                className="
+                  inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                  border border-[rgba(var(--border),0.75)] bg-[rgba(var(--background),0.06)]
+                  backdrop-blur-md transition hover:-translate-y-0.5
+                "
+              >
+                <Image src="/file.svg" alt="file" width={16} height={16} />
+                <span>{isEs ? "Descargar CV" : "Download CV"}</span>
+              </a>
             </div>
 
             <div className="mt-12 h-px w-full bg-[linear-gradient(to_right,transparent,rgba(var(--border),0.9),transparent)]" />

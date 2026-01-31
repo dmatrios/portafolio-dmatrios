@@ -23,7 +23,8 @@ export type ProjectSlug =
   | "notes"
   | "bufys"
   | "petshop"
-  | "portfolio";
+  | "portfolio"
+  | "github-issues-triage";
 
 
 
@@ -76,85 +77,85 @@ export type Project = {
 
 //Data de los proyectos
 export const PROJECTS: Project[] = [
- {
-  key: "groomer",
-  slug: "groomerapp",
-  title: "Groomer App",
-  description: {
-    es: "Sistema web interno para peluquería canina. Reemplaza Excel con gestión de clientes, mascotas, agenda, atenciones reales, pagos y reportes. Diseñado para uso diario por usuarios no técnicos. Demo desplegada.",
-    en: "Internal web system for a dog grooming business. Replaces Excel with clients, pets, scheduling, real visits, payments and reports. Designed for daily use by non-technical users. Deployed demo.",
-  },
-  status: "deployed",
-  tech: [
-    "next",
-    "ts",
-    "spring",
-    "mysql",
-    "docker",
-    "jwt",
-    "vercel",
-    "railway",
-    "github",
-  ],
-  coverSrc: "/projects/GroomerApp/cover.jpg",
-  galleryDir: "/projects/GroomerApp",
-  tags: ["Sistema real", "Full-Stack", "Spring Boot", "Next.js"],
-  accent: "cyan",
-  featured: true,
-
-  links: {
-    live: "https://groomer-front.vercel.app/",
-    repo: {
-      backend: "https://github.com/dmatrios/groomer-api",
-      frontend: "https://github.com/dmatrios/groomer-front",
+  {
+    key: "groomer",
+    slug: "groomerapp",
+    title: "Groomer App",
+    description: {
+      es: "Sistema web interno para peluquería canina. Reemplaza Excel con gestión de clientes, mascotas, agenda, atenciones reales, pagos y reportes. Diseñado para uso diario por usuarios no técnicos. Demo desplegada.",
+      en: "Internal web system for a dog grooming business. Replaces Excel with clients, pets, scheduling, real visits, payments and reports. Designed for daily use by non-technical users. Deployed demo.",
     },
-    // postman: "https://documenter.getpostman.com/view/XXXX/groomer-api-v5"
-  },
-
-  meta: {
-    year: "2026",
-    duration: {
-      es: "1 mes (MVP completo)",
-      en: "1 month (complete MVP)",
-    },
-    role: {
-      es: "Full-Stack",
-      en: "Full-Stack",
-    },
-    architecture: {
-      es: "Backend Java 21 + Spring Boot con arquitectura Package by Feature, DTOs, validación, JWT, roles y auditoría. Frontend Next.js App Router con arquitectura por feature, HTTP client centralizado y guards por rol.",
-      en: "Java 21 + Spring Boot backend using Package-by-Feature architecture, DTOs, validation, JWT, roles and auditing. Next.js App Router frontend with feature-based architecture, centralized HTTP client and role-based guards.",
-    },
-  },
-
-  highlights: {
-    es: [
-      "Reemplazo total de Excel por un sistema web centralizado.",
-      "Gestión completa de clientes y mascotas (1 cliente → N mascotas).",
-      "Agenda con detección de cruces de horario y confirmación manual.",
-      "Registro de atenciones reales con múltiples servicios y pagos.",
-      "Historial completo por mascota con filtros y agrupación por día.",
-      "Control de pagos: pendiente, parcial y pagado.",
-      "Búsqueda global por cliente, mascota, teléfono, zona o código.",
-      "Autenticación JWT con roles (ADMIN / USER) y auditoría de acciones.",
-      "Deploy real: backend en Railway, frontend en Vercel.",
+    status: "deployed",
+    tech: [
+      "next",
+      "ts",
+      "spring",
+      "mysql",
+      "docker",
+      "jwt",
+      "vercel",
+      "railway",
+      "github",
     ],
-    en: [
-      "Full replacement of Excel with a centralized web system.",
-      "Complete clients and pets management (1 client → N pets).",
-      "Scheduling with overlap detection and manual confirmation.",
-      "Real visit records with multiple services and payments.",
-      "Full pet history with filters and day grouping.",
-      "Payment control: pending, partial and paid.",
-      "Global search by client, pet, phone, zone or code.",
-      "JWT authentication with roles (ADMIN / USER) and action auditing.",
-      "Real deployment: backend on Railway, frontend on Vercel.",
-    ],
+    coverSrc: "/projects/GroomerApp/cover.jpg",
+    galleryDir: "/projects/GroomerApp",
+    tags: ["Sistema real", "Full-Stack", "Spring Boot", "Next.js"],
+    accent: "cyan",
+    featured: true,
+
+    links: {
+      live: "https://groomer-front.vercel.app/",
+      repo: {
+        backend: "https://github.com/dmatrios/groomer-api",
+        frontend: "https://github.com/dmatrios/groomer-front",
+      },
+      // postman: "https://documenter.getpostman.com/view/XXXX/groomer-api-v5"
+    },
+
+    meta: {
+      year: "2026",
+      duration: {
+        es: "1 mes (MVP completo)",
+        en: "1 month (complete MVP)",
+      },
+      role: {
+        es: "Full-Stack",
+        en: "Full-Stack",
+      },
+      architecture: {
+        es: "Backend Java 21 + Spring Boot con arquitectura Package by Feature, DTOs, validación, JWT, roles y auditoría. Frontend Next.js App Router con arquitectura por feature, HTTP client centralizado y guards por rol.",
+        en: "Java 21 + Spring Boot backend using Package-by-Feature architecture, DTOs, validation, JWT, roles and auditing. Next.js App Router frontend with feature-based architecture, centralized HTTP client and role-based guards.",
+      },
+    },
+
+    highlights: {
+      es: [
+        "Reemplazo total de Excel por un sistema web centralizado.",
+        "Gestión completa de clientes y mascotas (1 cliente → N mascotas).",
+        "Agenda con detección de cruces de horario y confirmación manual.",
+        "Registro de atenciones reales con múltiples servicios y pagos.",
+        "Historial completo por mascota con filtros y agrupación por día.",
+        "Control de pagos: pendiente, parcial y pagado.",
+        "Búsqueda global por cliente, mascota, teléfono, zona o código.",
+        "Autenticación JWT con roles (ADMIN / USER) y auditoría de acciones.",
+        "Deploy real: backend en Railway, frontend en Vercel.",
+      ],
+      en: [
+        "Full replacement of Excel with a centralized web system.",
+        "Complete clients and pets management (1 client → N pets).",
+        "Scheduling with overlap detection and manual confirmation.",
+        "Real visit records with multiple services and payments.",
+        "Full pet history with filters and day grouping.",
+        "Payment control: pending, partial and paid.",
+        "Global search by client, pet, phone, zone or code.",
+        "JWT authentication with roles (ADMIN / USER) and action auditing.",
+        "Real deployment: backend on Railway, frontend on Vercel.",
+      ],
+    },
+
+
   },
 
-
-},
-  
   {
     key: "ahorrape",
     slug: "ahorrape",
@@ -320,7 +321,7 @@ export const PROJECTS: Project[] = [
     },
 
     meta: {
-      year: "2026",
+      year: "2025",
       duration: { es: "1–2 semanas", en: "1–2 weeks" },
       role: { es: "Frontend", en: "Frontend" },
       architecture: {
@@ -339,6 +340,58 @@ export const PROJECTS: Project[] = [
         "Conversion-first sections (clear repeated CTAs).",
         "Service cards with strong visual hierarchy and premium design.",
         "Mobile-optimized with smooth scrolling.",
+      ],
+    },
+  },
+  {
+    key: "github-issues-triage",
+    slug: "github-issues-triage",
+    title: "GitHub Issues Triage Dashboard",
+    description: {
+      es: "Mini backoffice para revisar y triagear issues de repos públicos. UI tipo producto con estado en URL, paginación real y detalle con comentarios.",
+      en: "Mini backoffice to review and triage issues from public repos. Product-style UI with URL state, real pagination, and issue detail with comments.",
+    },
+    status: "deployed",
+    tech: ["angular", "ts", "github", "vercel"], // si tu tech keys tienen "tailwind" o "gsap", los agregamos
+    coverSrc: "/projects/GitHubIssuesTriage/cover.jpg",
+    galleryDir: "/projects/GitHubIssuesTriage",
+    tags: ["Angular 20", "Tailwind v4", "RxJS", "GitHub API"],
+    accent: "amber",
+    featured: true,
+
+    links: {
+      live: "https://github-issues-triage-dashboard.vercel.app/repo", // <-- pega tu deploy
+      repo: {
+        frontend: "https://github.com/dmatrios/github-issues-triage-dashboard", // <-- ajusta si tu repo se llama distinto
+      },
+    },
+
+    meta: {
+      year: "2026",
+      duration: { es: "2–4 días (MVP)", en: "2–4 days (MVP)" },
+      role: { es: "Frontend", en: "Frontend" },
+      architecture: {
+        es: "Angular 20 con arquitectura por features (repo/issues/shared). Estado persistido en query params, ViewState (loading/error/empty/ready) y consumo tipado de GitHub REST API.",
+        en: "Angular 20 with feature-based architecture (repo/issues/shared). URL state via query params, ViewState (loading/error/empty/ready), and strongly typed GitHub REST API consumption.",
+      },
+    },
+
+    highlights: {
+      es: [
+        "Arquitectura por features: repo / issues / shared (más mantenible y escalable).",
+        "Estado en URL (query params): compartir links, refresh sin perder filtros y back sin resets.",
+        "Paginación real con GitHub REST API y estados UI completos (loading/error/empty).",
+        "Issue detail con comentarios + navegación cuidada (contexto preservado).",
+        "UI premium tipo iOS glass (micro-interacciones suaves, botones no negros).",
+        "Soporte de token solo local (seguridad): en producción se usa API pública con rate limits documentados.",
+      ],
+      en: [
+        "Feature-based architecture: repo / issues / shared (maintainable and scalable).",
+        "URL state (query params): shareable links, refresh-safe, and back navigation without resets.",
+        "Real pagination via GitHub REST API with full UI states (loading/error/empty).",
+        "Issue detail with comments + polished navigation (context preserved).",
+        "Premium iOS-glass UI (smooth micro-interactions, no black buttons).",
+        "Local-only token support (security): production uses public API with documented rate limits.",
       ],
     },
   },

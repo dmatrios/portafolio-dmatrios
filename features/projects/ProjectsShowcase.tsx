@@ -6,16 +6,16 @@ import type { Lang, Project } from "@/shared/data/projects";
 import { PROJECTS } from "@/shared/data/projects";
 import { ProjectCard } from "@/features/projects/ProjectCard";
 
-type FilterKey = "all" | "fullstack" | "backend" | "landing";
+type FilterKey = "all" | "fullstack" | "backend" | "landing" ;
 
 function getCategory(p: Project): Exclude<FilterKey, "all"> {
   const hasSpring = p.tech.includes("spring");
   const hasDb = p.tech.includes("mysql");
   const hasFrontend =
-    p.tech.includes("react") || p.tech.includes("next") || p.tech.includes("angular");
+    p.tech.includes("react") || p.tech.includes("next") || p.tech.includes("angular") || p.tech.includes("vue");
 
-  // Landing: sin backend, orientado a marketing
-  if (!hasSpring && (p.tech.includes("next") || (p.tags ?? []).some((t) => /landing/i.test(t)))) {
+  // Landing: sin backend, orientado a marketing (cualquier frontend sin Spring)
+  if (!hasSpring && hasFrontend) {
     return "landing";
   }
 
@@ -41,7 +41,7 @@ export function ProjectsShowcase({ lang }: { lang: Lang }) {
           all: "Todos",
           fullstack: "Full-Stack",
           backend: "Backend",
-          landing: "Landings",
+          landing: "Frontend",
         },
       };
     }
@@ -53,7 +53,7 @@ export function ProjectsShowcase({ lang }: { lang: Lang }) {
         all: "All",
         fullstack: "Full-Stack",
         backend: "Backend",
-        landing: "Landings",
+        landing: "Frontend",
       },
     };
   }, [L]);
@@ -164,7 +164,7 @@ export function ProjectsShowcase({ lang }: { lang: Lang }) {
             "
           >
             {/* Tu ProjectCard ya muestra cover + tech */}
-            <ProjectCard project={p} lang={L} />
+            <ProjectCard project={p} lang={L} ctaAs="span" />
 
             {/* Glow extra por fuera */}
             <div

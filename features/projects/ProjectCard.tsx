@@ -20,7 +20,7 @@ function isFullProject(p: CardProject): p is Project {
 export function ProjectCard({
   project,
   lang,
-  ctaAs = "auto", // ✅ "auto" => si hay slug, Link; si no, span
+ ctaAs = "span", // ✅ "auto" => si hay slug, Link; si no, span
 }: {
   project: CardProject;
   lang: Lang;
