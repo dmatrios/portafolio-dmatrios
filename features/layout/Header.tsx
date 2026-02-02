@@ -18,7 +18,7 @@ export default function Header({ lang }: { lang: "es" | "en" }) {
   const items: MenuItem[] = useMemo(
     () => [
       { label: isEs ? "Sobre mí" : "About", href: `/${lang}#about` },
-      { label: isEs ? "Proyectos" : "Projects", href: `/${lang}#projects` },
+      { label: isEs ? "Proyectos" : "Projects", href: `/${lang}/projects` }, 
       { label: "Skills", href: `/${lang}#skills` },
       { label: isEs ? "Contacto" : "Contact", href: `/${lang}/contact` },
       { label: isEs ? "Ver todos" : "View all", href: `/${lang}/projects` },

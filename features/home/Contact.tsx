@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, Github, Linkedin } from "lucide-react";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -37,6 +37,9 @@ export function Contact({ lang }: { lang: "es" | "en" }) {
       privacy: "No spam. Only real conversations.",
     };
   }, [isEs]);
+
+  const GITHUB = "https://github.com/dmatrios";
+  const LINKEDIN = "https://www.linkedin.com/in/daniel-maturrano/";
 
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
@@ -113,11 +116,51 @@ export function Contact({ lang }: { lang: "es" | "en" }) {
                 {copy.sub}
               </p>
 
-              <div className="mt-7 inline-flex max-w-full items-center gap-2 rounded-full border border-[rgba(var(--border),0.75)] bg-[rgba(var(--background),0.10)] backdrop-blur-xl px-4 py-2 mx-auto md:mx-0">
+              <div className="mt-7 inline-flex max-w-full items-center gap-3 rounded-full border border-[rgba(var(--border),0.75)] bg-[rgba(var(--background),0.10)] backdrop-blur-xl px-4 py-2 mx-auto md:mx-0">
                 <Mail className="h-4 w-4 opacity-80 shrink-0" />
                 <span className="text-[13px] font-[650] text-[rgba(var(--foreground),0.92)] truncate">
                   ddmatrios@gmail.com
                 </span>
+
+                <span className="h-4 w-px bg-[rgba(var(--border),0.8)]" />
+
+                <div className="inline-flex items-center gap-2">
+                  <a
+                    href={GITHUB}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                    className="
+        inline-flex h-9 w-9 items-center justify-center rounded-full
+        border border-[rgba(var(--border),0.75)]
+        bg-[rgba(var(--background),0.10)]
+        transition
+        hover:-translate-y-0.5
+        hover:bg-[rgba(var(--background),0.18)]
+        hover:shadow-[0_18px_50px_rgba(0,0,0,0.12)]
+      "
+                  >
+                    <Github className="h-4 w-4 opacity-90" />
+                  </a>
+
+                  <a
+                    href={LINKEDIN}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="
+        inline-flex h-9 w-9 items-center justify-center rounded-full
+        border border-[rgba(var(--border),0.75)]
+        bg-[rgba(var(--background),0.10)]
+        transition
+        hover:-translate-y-0.5
+        hover:bg-[rgba(var(--background),0.18)]
+        hover:shadow-[0_18px_50px_rgba(0,0,0,0.12)]
+      "
+                  >
+                    <Linkedin className="h-4 w-4 opacity-90" />
+                  </a>
+                </div>
               </div>
 
               <p className="mt-4 text-[12px] text-[rgba(var(--muted-foreground),0.9)]">{copy.privacy}</p>

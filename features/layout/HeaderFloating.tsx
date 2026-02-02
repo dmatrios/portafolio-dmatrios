@@ -58,7 +58,7 @@ export function HeaderFloating({ lang }: { lang: "es" | "en" }) {
         <GlowLink href={`/${lang}`} label="Dmatrios" />
         <div className="h-5 w-px bg-[rgba(var(--border),0.9)] mx-1" />
         <GlowLink href={`/${lang}#about`} label={t.about} />
-        <GlowLink href={`/${lang}#projects`} label={t.projects} />
+        <GlowLink href={`/${lang}/projects`} label={t.projects} />
         <GlowLink href={`/${lang}#skills`} label={t.skills} />
         <GlowLink href={`/${lang}/contact`} label={t.contact} />
         <div className="h-5 w-px bg-[rgba(var(--border),0.9)] mx-1" />

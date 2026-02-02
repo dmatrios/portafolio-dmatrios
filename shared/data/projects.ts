@@ -104,7 +104,7 @@ export const PROJECTS: Project[] = [
     featured: true,
 
     links: {
-      live: "https://groomer-front.vercel.app/",
+      //live: "https://groomer-front.vercel.app/",
       repo: {
         backend: "https://github.com/dmatrios/groomer-api",
         frontend: "https://github.com/dmatrios/groomer-front",
@@ -115,8 +115,8 @@ export const PROJECTS: Project[] = [
     meta: {
       year: "2026",
       duration: {
-        es: "1 mes (MVP completo)",
-        en: "1 month (complete MVP)",
+        es: "1 mes",
+        en: "1 month ",
       },
       role: {
         es: "Full-Stack",

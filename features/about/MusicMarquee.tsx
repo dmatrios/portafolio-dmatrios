@@ -81,33 +81,66 @@ export function MusicMarquee({ tracks, onSelect, speedPxPerSec = 42 }: Props) {
     };
   }, [reduceMotion, speedPxPerSec, laneItems.length]);
 
-  // ===== Mobile: init to middle set + infinite reposition =====
+  // ===== Mobile: init to middle set + infinite reposition (ROBUST) =====
   useEffect(() => {
     const el = mobileRef.current;
     if (!el) return;
 
     setMobileReady(true);
 
-    const init = () => {
-      const third = el.scrollWidth / 3;
-      if (!Number.isFinite(third) || third <= 0) return;
-      el.scrollLeft = third;
+    let removeScrollListener: (() => void) | null = null;
+
+    const setup = () => {
+      const items = Array.from(el.children) as HTMLElement[];
+      const n = tracks.length;
+
+      // necesitamos 3 sets completos
+      if (n <= 0 || items.length < n * 3) return;
+
+      const set2First = items[n];
+      const set3First = items[n * 2];
+
+      if (!set2First || !set3First) return;
+
+      // ancho real de 1 set
+      const setW = set3First.offsetLeft - set2First.offsetLeft;
+      if (!Number.isFinite(setW) || setW <= 0) return;
+
+      // arrancamos en set del medio (set2)
+      el.scrollLeft = set2First.offsetLeft;
+
+      const onScroll = () => {
+        const left = el.scrollLeft;
+
+        // Si nos acercamos demasiado al set 1 => saltamos 1 set hacia adelante
+        if (left < set2First.offsetLeft - setW * 0.5) {
+          el.scrollLeft = left + setW;
+          return;
+        }
+
+        // Si nos acercamos demasiado al set 3 => saltamos 1 set hacia atrás
+        if (left > set3First.offsetLeft - setW * 0.5) {
+          el.scrollLeft = left - setW;
+        }
+      };
+
+      el.addEventListener("scroll", onScroll, { passive: true });
+      removeScrollListener = () => el.removeEventListener("scroll", onScroll);
     };
 
-    const id = requestAnimationFrame(init);
+    // Doble RAF estabiliza layout en mobile (especialmente iOS)
+    const r1 = requestAnimationFrame(() => {
+      const r2 = requestAnimationFrame(() => {
+        setup();
+      });
 
-    const onScroll = () => {
-      const third = el.scrollWidth / 3;
-      if (!Number.isFinite(third) || third <= 0) return;
+      // por si desmonta antes del segundo RAF
+      return () => cancelAnimationFrame(r2);
+    });
 
-      if (el.scrollLeft < third * 0.5) el.scrollLeft += third;
-      else if (el.scrollLeft > third * 1.5) el.scrollLeft -= third;
-    };
-
-    el.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      cancelAnimationFrame(id);
-      el.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(r1);
+      if (removeScrollListener) removeScrollListener();
     };
   }, [tracks.length]);
 
