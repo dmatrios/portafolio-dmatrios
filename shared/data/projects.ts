@@ -26,10 +26,8 @@ export type ProjectSlug =
   | "portfolio"
   | "github-issues-triage";
 
-
-
 export type ProjectLinks = {
-  live?: string;    // demo en vivo
+  live?: string; // demo en vivo
   repo?: {
     backend?: string;
     frontend?: string;
@@ -37,16 +35,12 @@ export type ProjectLinks = {
   postman?: string; // colección / docs
 };
 
-
-
 export type ProjectMeta = {
   year?: string;
   duration?: { es: string; en: string }; // "3 semanas", "2 months", etc.
-  role?: { es: string; en: string };     // "Full-stack", "Frontend", etc.
+  role?: { es: string; en: string }; // "Full-stack", "Frontend", etc.
   architecture?: { es: string; en: string };
 };
-
-
 
 export type Project = {
   key: string;
@@ -75,15 +69,21 @@ export type Project = {
   };
 };
 
-//Data de los proyectos
+// =========================
+// Data de los proyectos
+// =========================
+// Objetivo de copy:
+// - Alinear CV ↔ portafolio: backend sólido (capas, DTOs, validación, JWT/roles, MySQL, Docker, deploy).
+// - Evitar fricciones de stack (ej: tags que dicen React pero tech dice Vue).
+// - Mantener tono profesional (enterprise/product), sin inflar ni mentir.
 export const PROJECTS: Project[] = [
   {
     key: "groomer",
     slug: "groomerapp",
     title: "Groomer App",
     description: {
-      es: "Sistema web interno para peluquería canina. Reemplaza Excel con gestión de clientes, mascotas, agenda, atenciones reales, pagos y reportes. Diseñado para uso diario por usuarios no técnicos. Demo desplegada.",
-      en: "Internal web system for a dog grooming business. Replaces Excel with clients, pets, scheduling, real visits, payments and reports. Designed for daily use by non-technical users. Deployed demo.",
+      es: "Sistema web full-stack para gestión operativa de una peluquería canina. Reemplaza Excel con un backend orientado a negocio y un frontend diseñado para uso diario por usuarios no técnicos. Demo desplegada.",
+      en: "Full-stack web system for day-to-day operations of a dog grooming business. Replaces Excel with a business-oriented backend and a frontend designed for daily use by non-technical users. Deployed demo.",
     },
     status: "deployed",
     tech: [
@@ -99,12 +99,12 @@ export const PROJECTS: Project[] = [
     ],
     coverSrc: "/projects/GroomerApp/cover.jpg",
     galleryDir: "/projects/GroomerApp",
-    tags: ["Sistema real", "Full-Stack", "Spring Boot", "Next.js"],
+    tags: ["Sistema real", "Full-Stack", "Backend Java", "Spring Boot"],
     accent: "cyan",
     featured: true,
 
     links: {
-      //live: "https://groomer-front.vercel.app/",
+      // live: "https://groomer-front.vercel.app/",
       repo: {
         backend: "https://github.com/dmatrios/groomer-api",
         frontend: "https://github.com/dmatrios/groomer-front",
@@ -116,44 +116,40 @@ export const PROJECTS: Project[] = [
       year: "2026",
       duration: {
         es: "1 mes",
-        en: "1 month ",
+        en: "1 month",
       },
       role: {
-        es: "Full-Stack",
-        en: "Full-Stack",
+        es: "Full-Stack (enfoque backend)",
+        en: "Full-Stack (backend-focused)",
       },
       architecture: {
-        es: "Backend Java 21 + Spring Boot con arquitectura Package by Feature, DTOs, validación, JWT, roles y auditoría. Frontend Next.js App Router con arquitectura por feature, HTTP client centralizado y guards por rol.",
-        en: "Java 21 + Spring Boot backend using Package-by-Feature architecture, DTOs, validation, JWT, roles and auditing. Next.js App Router frontend with feature-based architecture, centralized HTTP client and role-based guards.",
+        es: "Backend Java 21 + Spring Boot con arquitectura Package by Feature y capas Controller/Service/Repository, DTOs, Bean Validation, manejo centralizado de errores, JWT con roles y auditoría. Frontend Next.js App Router con arquitectura por feature, HTTP client centralizado y guards por rol.",
+        en: "Java 21 + Spring Boot backend using Package-by-Feature architecture and Controller/Service/Repository layers, DTOs, Bean Validation, centralized error handling, JWT with roles and auditing. Next.js App Router frontend with feature-based architecture, centralized HTTP client and role-based guards.",
       },
     },
 
     highlights: {
       es: [
-        "Reemplazo total de Excel por un sistema web centralizado.",
-        "Gestión completa de clientes y mascotas (1 cliente → N mascotas).",
-        "Agenda con detección de cruces de horario y confirmación manual.",
-        "Registro de atenciones reales con múltiples servicios y pagos.",
-        "Historial completo por mascota con filtros y agrupación por día.",
-        "Control de pagos: pendiente, parcial y pagado.",
+        "Reemplazo de Excel por un sistema centralizado orientado a operación diaria.",
+        "Gestión de clientes y mascotas (1 cliente → N mascotas) con historial completo.",
+        "Agenda con detección de solapamientos y confirmación manual de conflictos.",
+        "Registro de atenciones reales con múltiples servicios y control de pagos.",
+        "Estados de pago: pendiente, parcial y pagado, con trazabilidad.",
         "Búsqueda global por cliente, mascota, teléfono, zona o código.",
         "Autenticación JWT con roles (ADMIN / USER) y auditoría de acciones.",
-        "Deploy real: backend en Railway, frontend en Vercel.",
+        "Deploy real: backend en Railway, frontend en Vercel (Docker).",
       ],
       en: [
-        "Full replacement of Excel with a centralized web system.",
-        "Complete clients and pets management (1 client → N pets).",
-        "Scheduling with overlap detection and manual confirmation.",
-        "Real visit records with multiple services and payments.",
-        "Full pet history with filters and day grouping.",
-        "Payment control: pending, partial and paid.",
+        "Excel replacement with a centralized system for daily operations.",
+        "Clients and pets management (1 client → N pets) with full history.",
+        "Scheduling with overlap detection and manual conflict confirmation.",
+        "Real visit records with multiple services and payment tracking.",
+        "Payment states: pending, partial and paid, with traceability.",
         "Global search by client, pet, phone, zone or code.",
         "JWT authentication with roles (ADMIN / USER) and action auditing.",
-        "Real deployment: backend on Railway, frontend on Vercel.",
+        "Real deployment: backend on Railway, frontend on Vercel (Docker).",
       ],
     },
-
-
   },
 
   {
@@ -161,61 +157,69 @@ export const PROJECTS: Project[] = [
     slug: "ahorrape",
     title: "AhorraPE",
     description: {
-      es: "Finanzas personales: presupuestos, gastos y control. Enfocado en backend sólido.",
-      en: "Personal finance: budgets, expenses and control. Strong backend-first approach.",
+      es: "Proyecto full-stack de finanzas personales enfocado en lógica de negocio y persistencia de datos. Control de presupuestos y movimientos con enfoque backend-first.",
+      en: "Full-stack personal finance project focused on business logic and data persistence. Budgets and transactions tracking with a backend-first approach.",
     },
     status: "local",
     tech: ["vue", "ts", "spring", "mysql", "github"],
     coverSrc: "/projects/AhorraPE/cover.jpg",
     galleryDir: "/projects/AhorraPE",
-    tags: ["Spring Boot", "MySQL", "React"],
+    // ✅ Alinear tags con tech real (si tech usa Vue, evita poner React aquí)
+    tags: ["Spring Boot", "MySQL", "Vue"],
     accent: "violet",
     featured: true,
 
     links: {
       repo: {
         backend: "https://github.com/dmatrios/ahorrape-api",
-        frontend: "https://github.com/dmatrios/ahorrape-front"
+        frontend: "https://github.com/dmatrios/ahorrape-front",
       },
     },
+
     meta: {
       year: "2026",
       duration: { es: "3–4 semanas (aprox.)", en: "3–4 weeks (approx.)" },
       role: { es: "Full-Stack (enfoque backend)", en: "Full-Stack (backend-first)" },
       architecture: {
-        es: "API REST por features + DTOs + validación + JWT (cuando aplique).",
-        en: "Feature-based REST API + DTOs + validation + JWT (when applicable).",
+        es: "API REST organizada por features, DTOs y validación, con persistencia relacional en MySQL. El frontend actúa como cliente de la API.",
+        en: "Feature-based REST API with DTOs and validation, backed by relational MySQL persistence. Frontend acts as an API consumer.",
       },
     },
+
     highlights: {
       es: [
+        "Modelo base para presupuestos, categorías y movimientos.",
         "Dashboard con resumen mensual e indicadores claros.",
         "Gestión de categorías y movimientos con filtros.",
         "Estructura pensada para escalar a multi-usuario / multi-cuenta.",
       ],
       en: [
+        "Core model for budgets, categories and transactions.",
         "Dashboard with monthly summary and clear KPIs.",
-        "Categories and transactions with filters.",
-        "Scalable structure for multi-user / multi-account.",
+        "Categories and transactions management with filters.",
+        "Scalable foundation for multi-user / multi-account.",
       ],
     },
+
     demo: {
       youtubeId: "7U5n5Y2ydK8",
       label: { es: "Ver demo en video", en: "Watch demo video" },
     },
-  }, {
+  },
+
+  {
     key: "soelec",
     slug: "soelec",
     title: "SOELEC SAC",
     description: {
-      es: "Plataforma web premium para líder en estructuras metálicas. Diseño de alto impacto, optimizado para SEO y performance.",
-      en: "Premium web platform for metal structures leader. High-impact design, optimized for SEO and performance.",
+      es: "Landing premium para empresa de estructuras metálicas. Enfocada en conversión, optimizada para SEO y performance, con un diseño de alto impacto orientado a negocio.",
+      en: "Premium landing for a metal structures company. Conversion-focused, SEO and performance optimized, with a business-oriented high-impact design.",
     },
     status: "deployed",
     tech: ["next", "ts", "vercel", "github"],
     coverSrc: "/projects/SOELEC/cover.jpg",
     galleryDir: "/projects/SOELEC",
-    tags: ["Next.js", "Tailwind", "UI Motion", "SEO"],
+    tags: ["Next.js", "Tailwind", "SEO", "Performance"],
     accent: "amber",
     featured: true,
 
@@ -229,46 +233,47 @@ export const PROJECTS: Project[] = [
     meta: {
       year: "2026",
       duration: { es: "3 semanas", en: "3 weeks" },
-      role: { es: "Frontend / Full-Stack", en: "Frontend / Full-Stack" },
+      role: { es: "Frontend", en: "Frontend" },
       architecture: {
-        es: "Next.js 14 con SSG/SSR, Tailwind CSS avanzado, animaciones GSAP, meta tags dinámicos y sitemap.",
-        en: "Next.js 14 with SSG/SSR, advanced Tailwind CSS, GSAP animations, dynamic meta tags and sitemap.",
+        es: "Next.js 14 con SSG/SSR, Tailwind CSS avanzado, animaciones, meta tags y sitemap para SEO.",
+        en: "Next.js 14 with SSG/SSR, advanced Tailwind CSS, animations, meta tags and sitemap for SEO.",
       },
     },
 
     highlights: {
       es: [
-        "Diseño premium con paleta de colores corporativos y tipografía profesional.",
-        "Secciones de portfolio: proyectos destacados, capacidades técnicas y testimonios.",
-        "Optimización Core Web Vitals: score 90+ en Lighthouse.",
-        "SEO on-page completo: meta tags, Open Graph, schema.org estructurado.",
+        "Diseño premium con jerarquía visual y CTAs claros orientados a conversión.",
+        "Optimización de Core Web Vitals: 90+ en Lighthouse.",
+        "SEO on-page completo: meta tags, Open Graph y schema.org estructurado.",
+        "Secciones listas para negocio: servicios, proyectos, prueba social y contacto.",
       ],
       en: [
-        "Premium design with corporate color palette and professional typography.",
-        "Portfolio sections: featured projects, technical capabilities and testimonials.",
+        "Premium design with strong visual hierarchy and conversion-focused CTAs.",
         "Core Web Vitals optimization: 90+ Lighthouse score.",
-        "Complete on-page SEO: meta tags, Open Graph, structured schema.org.",
+        "Complete on-page SEO: meta tags, Open Graph and structured schema.org.",
+        "Business-ready sections: services, projects, social proof and contact.",
       ],
     },
   },
+
   {
     key: "notes",
     slug: "notes",
     title: "Notes API",
     description: {
-      es: "API REST con autenticación JWT. Deploy en Railway. Incluye Docker + MySQL.",
-      en: "REST API with JWT authentication. Deployed on Railway. Includes Docker + MySQL.",
+      es: "API REST backend con autenticación JWT, persistencia en MySQL y contenerización con Docker. Desplegada en Railway para demo técnica.",
+      en: "Backend REST API with JWT authentication, MySQL persistence and Docker containerization. Deployed on Railway for technical demo.",
     },
     status: "deployed",
     tech: ["spring", "mysql", "jwt", "docker", "railway", "github"],
     coverSrc: "/projects/Notes/cover.jpg",
     galleryDir: "/projects/Notes",
-    tags: ["Spring Boot", "JWT", "Docker", "Railway"],
+    tags: ["Backend", "Spring Boot", "JWT", "Railway"],
     accent: "violet",
     featured: false,
 
     links: {
-      //live: "https://TU-URL-DE-RAILWAY", // si tienes URL pública del API/docs
+      // live: "https://TU-URL-DE-RAILWAY",
       repo: {
         backend: "https://github.com/dmatrios/notes-api",
       },
@@ -276,11 +281,12 @@ export const PROJECTS: Project[] = [
 
     meta: {
       year: "2026",
-      duration: { es: "1 semana (práctica)", en: "1 week (practice)" },
+      // ✅ Evitar "práctica" (suena a tutorial). Mantén honestidad sin restar peso.
+      duration: { es: "1 semana", en: "1 week" },
       role: { es: "Backend", en: "Backend" },
       architecture: {
-        es: "API REST con capas + DTOs + validación + JWT. Contenerización con Docker y base MySQL.",
-        en: "Layered REST API + DTOs + validation + JWT. Dockerized with MySQL.",
+        es: "API REST con arquitectura por capas, DTOs, validación y JWT. Persistencia relacional en MySQL, contenerizada con Docker y desplegada en Railway.",
+        en: "Layered REST API with DTOs, validation and JWT. Relational MySQL persistence, Dockerized and deployed on Railway.",
       },
     },
 
@@ -288,33 +294,34 @@ export const PROJECTS: Project[] = [
       es: [
         "Login + JWT con endpoints protegidos.",
         "MySQL + persistencia y estructura escalable.",
-        "Deploy en Railway para demo técnica.",
+        "Deploy en Railway para validación técnica rápida.",
       ],
       en: [
         "Login + JWT with protected endpoints.",
-        "MySQL persistence and scalable structure.",
-        "Railway deployment for technical demo.",
+        "MySQL persistence with a scalable structure.",
+        "Railway deployment for quick technical validation.",
       ],
     },
   },
+
   {
     key: "bufys",
     slug: "bufys",
     title: "Bufys Grooming Landing",
     description: {
-      es: "Landing de servicios para grooming: baño, corte y paquetes. Enfocada en conversión.",
-      en: "Service landing for grooming: bath, haircut and packages. Conversion-focused.",
+      es: "Landing orientada a conversión para servicios de grooming (baño, corte y paquetes). UI clara, CTAs visibles y enfoque mobile-first.",
+      en: "Conversion-focused landing for grooming services (bath, haircut and packages). Clear UI, visible CTAs and mobile-first approach.",
     },
-    status: "deployed", // si está live
-    tech: ["next", "ts", "vercel", "github"], // ajusta si fue otro stack
+    status: "deployed",
+    tech: ["next", "ts", "vercel", "github"],
     coverSrc: "/projects/Bufys/cover.jpg",
     galleryDir: "/projects/Bufys",
-    tags: ["Landing", "Conversion", "UI"],
+    tags: ["Landing", "Conversión", "UI/UX"],
     accent: "cyan",
     featured: false,
 
     links: {
-      live: "https://tiny-pony-9c83e9.netlify.app/", // si está en Netlify/Vercel
+      live: "https://tiny-pony-9c83e9.netlify.app/",
       repo: {
         frontend: "https://github.com/dmatrios/bufys-landing",
       },
@@ -325,34 +332,35 @@ export const PROJECTS: Project[] = [
       duration: { es: "1–2 semanas", en: "1–2 weeks" },
       role: { es: "Frontend", en: "Frontend" },
       architecture: {
-        es: "Landing por secciones: hero, servicios, paquetes, testimonios y CTA. Micro-interacciones y performance.",
-        en: "Section-based landing: hero, services, packages, testimonials and CTA. Micro-interactions and performance.",
+        es: "Landing por secciones (servicios, paquetes, testimonios y CTA) con micro-interacciones y foco en performance.",
+        en: "Section-based landing (services, packages, testimonials and CTA) with micro-interactions and performance focus.",
       },
     },
 
     highlights: {
       es: [
-        "Secciones pensadas para conversión (CTA repetido y claro).",
+        "Secciones pensadas para conversión (CTA claro y repetido).",
         "Tarjetas de servicios con jerarquía visual y diseño premium.",
-        "Optimizada para mobile con scroll fluido.",
+        "Optimizada para mobile con navegación fluida.",
       ],
       en: [
         "Conversion-first sections (clear repeated CTAs).",
         "Service cards with strong visual hierarchy and premium design.",
-        "Mobile-optimized with smooth scrolling.",
+        "Mobile-optimized with smooth navigation.",
       ],
     },
   },
+
   {
     key: "github-issues-triage",
     slug: "github-issues-triage",
     title: "GitHub Issues Triage Dashboard",
     description: {
-      es: "Mini backoffice para revisar y triagear issues de repos públicos. UI tipo producto con estado en URL, paginación real y detalle con comentarios.",
-      en: "Mini backoffice to review and triage issues from public repos. Product-style UI with URL state, real pagination, and issue detail with comments.",
+      es: "Mini backoffice en Angular para revisar y triagear issues de repos públicos. UI tipo producto con estado en URL, paginación real y detalle con comentarios.",
+      en: "Angular mini backoffice to review and triage issues from public repos. Product-style UI with URL state, real pagination, and issue detail with comments.",
     },
     status: "deployed",
-    tech: ["angular", "ts", "github", "vercel"], // si tu tech keys tienen "tailwind" o "gsap", los agregamos
+    tech: ["angular", "ts", "github", "vercel"],
     coverSrc: "/projects/GitHubIssuesTriage/cover.jpg",
     galleryDir: "/projects/GitHubIssuesTriage",
     tags: ["Angular 20", "Tailwind v4", "RxJS", "GitHub API"],
@@ -360,9 +368,9 @@ export const PROJECTS: Project[] = [
     featured: true,
 
     links: {
-      live: "https://github-issues-triage-dashboard.vercel.app/repo", // <-- pega tu deploy
+      live: "https://github-issues-triage-dashboard.vercel.app/repo",
       repo: {
-        frontend: "https://github.com/dmatrios/github-issues-triage-dashboard", // <-- ajusta si tu repo se llama distinto
+        frontend: "https://github.com/dmatrios/github-issues-triage-dashboard",
       },
     },
 
@@ -378,20 +386,20 @@ export const PROJECTS: Project[] = [
 
     highlights: {
       es: [
-        "Arquitectura por features: repo / issues / shared (más mantenible y escalable).",
-        "Estado en URL (query params): compartir links, refresh sin perder filtros y back sin resets.",
+        "Arquitectura por features: repo / issues / shared (mantenible y escalable).",
+        "Estado en URL (query params): links compartibles, refresh sin perder filtros y back sin resets.",
         "Paginación real con GitHub REST API y estados UI completos (loading/error/empty).",
         "Issue detail con comentarios + navegación cuidada (contexto preservado).",
-        "UI premium tipo iOS glass (micro-interacciones suaves, botones no negros).",
-        "Soporte de token solo local (seguridad): en producción se usa API pública con rate limits documentados.",
+        "UI tipo producto con micro-interacciones (sin botones negros).",
+        "Soporte de token solo local: en producción se usa API pública con rate limits documentados.",
       ],
       en: [
         "Feature-based architecture: repo / issues / shared (maintainable and scalable).",
         "URL state (query params): shareable links, refresh-safe, and back navigation without resets.",
         "Real pagination via GitHub REST API with full UI states (loading/error/empty).",
         "Issue detail with comments + polished navigation (context preserved).",
-        "Premium iOS-glass UI (smooth micro-interactions, no black buttons).",
-        "Local-only token support (security): production uses public API with documented rate limits.",
+        "Product-style UI with micro-interactions (no black buttons).",
+        "Local-only token support: production uses public API with documented rate limits.",
       ],
     },
   },
