@@ -285,7 +285,7 @@ function MobileCardSlider({ projects, lang }: { projects: Project[]; lang: Lang 
                   "radial-gradient(900px circle at 30% 20%, rgba(255,255,255,.10), transparent 60%), radial-gradient(900px circle at 70% 40%, rgba(255,255,255,.08), transparent 60%), radial-gradient(900px circle at 50% 85%, rgba(255,255,255,.06), transparent 65%)",
               }}
             />
-           <ProjectCard project={p} lang={lang} ctaAs="none" />
+           <ProjectCard project={p} lang={lang} ctaAs="auto" />
           </div>
         ))}
       </div>
@@ -340,7 +340,7 @@ function DeckCard({
         transformStyle: "preserve-3d",
       }}
     >
-      <ProjectCard project={project} lang={lang} />
+      <ProjectCard project={project} lang={lang} ctaAs="auto" />
     </motion.div>
   );
 }
